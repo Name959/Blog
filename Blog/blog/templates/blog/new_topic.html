@@ -1,0 +1,93 @@
+{% extends "blog/base.html" %}
+{% load django_bootstrap5 %}
+
+{% block page_header %}
+<div class="page-header">
+    <h1 class="display-5 fw-bold">
+        <i class="bi bi-folder-plus me-2"></i>Create New Topic
+    </h1>
+    <p class="lead text-muted">Organize your blog posts by creating topics</p>
+</div>
+{% endblock page_header %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                <div class="text-center mb-4">
+                    <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="bi bi-folder-plus text-primary fs-2"></i>
+                    </div>
+                    <h4>Create a New Topic</h4>
+                    <p class="text-muted">Topics help categorize and organize your blog entries</p>
+                </div>
+                
+                <form action="{% url 'blog:new_topic' %}" method="post" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    
+                    <div class="mb-4">
+                        <label for="id_text" class="form-label fw-bold">
+                            <i class="bi bi-tag me-1"></i>Topic Name
+                        </label>
+                        {{ form.text }}
+                        {% if form.text.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.text.errors }}
+                        </div>
+                        {% endif %}
+                        <div class="form-text">Choose a descriptive name for your topic (e.g., Technology, Travel, Food)</div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        <a href="{% url 'blog:topics' %}" class="btn btn-outline-secondary me-md-2">
+                            <i class="bi bi-arrow-left me-1"></i>Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle me-1"></i>Create Topic
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card border-0 shadow-sm mt-4">
+            <div class="card-body">
+                <h6 class="card-title">
+                    <i class="bi bi-lightbulb me-2 text-warning"></i>Tips for creating topics
+                </h6>
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        <small>Keep topic names short and descriptive</small>
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        <small>Use broad categories that can contain multiple entries</small>
+                    </li>
+                    <li>
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        <small>You can always edit or delete topics later</small>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #id_text {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #dee2e6;
+        border-radius: 0.375rem;
+        transition: border-color 0.15s ease-in-out;
+    }
+    
+    #id_text:focus {
+        border-color: #4e73df;
+        box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
+        outline: 0;
+    }
+</style>
+{% endblock content %}

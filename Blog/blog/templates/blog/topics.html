@@ -1,0 +1,111 @@
+{% extends "blog/base.html" %}
+
+{% block page_header %}
+<div class="page-header">
+    <h1 class="display-5 fw-bold">
+        Topics
+    </h1>
+    <p class="text-muted mb-4">Organize your blog posts into categories</p>
+</div>
+{% endblock page_header %}
+
+{% block content %}
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h5 class="card-title mb-1">
+                    My Topics
+                </h5>
+                <p class="text-muted small mb-0">
+                    {{ topics|length }} topic{{ topics|length|pluralize:"s" }}
+                </p>
+            </div>
+            <a href="{% url 'blog:new_topic' %}" class="btn btn-primary">
+                New Topic
+            </a>
+        </div>
+        
+        {% if topics %}
+        <div class="row">
+            {% for topic in topics %}
+            <div class="col-12 mb-3">
+                <div class="card topic-card h-100 border-start border-primary border-3 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-start">
+                            <!-- Topic 图标区域 -->
+                            <div class="flex-shrink-0 me-3">
+                                <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                    <span class="text-primary fw-bold">📁</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Topic 信息区域 -->
+                            <div class="flex-grow-1 me-3">
+                                <h5 class="card-title mb-1">
+                                    <a href="{% url 'blog:topic' topic.id %}" class="text-decoration-none text-dark">
+                                        {{ topic.text }}
+                                    </a>
+                                </h5>
+                                <div class="d-flex align-items-center text-muted small">
+                                    <span class="me-3">
+                                        {{ topic.entry_set.count }} entr{{ topic.entry_set.count|pluralize:"y,ies" }}
+                                    </span>
+                                    <span>
+                                        {{ topic.date_added|date:"M d, Y" }}
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <!-- 操作按钮区域 -->
+                            <div class="flex-shrink-0">
+                                <div class="d-flex flex-column flex-sm-row gap-2">
+                                    <a href="{% url 'blog:topic' topic.id %}" class="btn btn-outline-primary btn-sm">
+                                        View
+                                    </a>
+                                    <a href="{% url 'blog:delete_topic' topic.id %}" 
+                                        class="btn btn-outline-danger btn-sm"
+                                        onclick="return confirm('Are you sure you want to delete \"{{ topic.text }}\"? \n\n⚠️ WARNING: All entries in this topic will be deleted!\n\nThis action cannot be undone.');">
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <div class="mb-4">
+                <div class="text-muted" style="font-size: 4rem;">📁</div>
+            </div>
+            <h4 class="text-muted mb-3">No topics yet</h4>
+            <p class="text-muted mb-4">Create your first topic to start organizing your blog posts</p>
+            <a href="{% url 'blog:new_topic' %}" class="btn btn-primary btn-lg">
+                Create First Topic
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if topics %}
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="alert alert-info d-flex align-items-start" role="alert">
+            <div class="me-3 mt-1" style="font-size: 1.5rem;">ℹ️</div>
+            <div>
+                <h6 class="alert-heading mb-2">How to use topics</h6>
+                <ul class="mb-0 ps-3">
+                    <li class="mb-1">Topics help organize your blog posts into categories</li>
+                    <li class="mb-1">Click "View" to see all entries in a topic</li>
+                    <li>Use the delete button with caution - it removes the topic and all its entries</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock content %}

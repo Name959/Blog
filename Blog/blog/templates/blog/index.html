@@ -1,0 +1,85 @@
+{% extends "blog/base.html" %}
+
+{% block page_header %}
+<div class="hero-section text-center py-5">
+    <div class="container">
+        <h1 class="display-4 fw-bold mb-3">Welcome to My Blog</h1>
+        <p class="lead mb-4">Share your thoughts, ideas, and stories with the world</p>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="p-5 rounded-4 shadow-lg" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
+                    <p class="mb-0 fs-5 text-white">A simple yet powerful blogging platform...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock page_header %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center">
+                <div class="bg-primary bg-gradient rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                    <i class="bi bi-pencil-square text-white fs-4"></i>
+                </div>
+                <h5 class="card-title">Write Articles</h5>
+                <p class="card-text text-muted">Create and publish your thoughts, stories, and ideas.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center">
+                <div class="bg-success bg-gradient rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                    <i class="bi bi-folder text-white fs-4"></i>
+                </div>
+                <h5 class="card-title">Organize Topics</h5>
+                <p class="card-text text-muted">Categorize your posts into different topics.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center">
+                <div class="bg-warning bg-gradient rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                    <i class="bi bi-clock-history text-white fs-4"></i>
+                </div>
+                <h5 class="card-title">Track History</h5>
+                <p class="card-text text-muted">Edit and update your posts anytime.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body text-center p-5">
+                <h2 class="mb-4">Ready to Start Blogging?</h2>
+                <p class="lead mb-4">Join our community of writers and readers today.</p>
+                {% if not user.is_authenticated %}
+                <div class="d-flex gap-3 justify-content-center">
+                    <a href="{% url 'account:register' %}" class="btn btn-primary btn-lg px-4">
+                        <i class="bi bi-person-plus me-2"></i>Get Started
+                    </a>
+                    <a href="{% url 'account:login' %}" class="btn btn-outline-primary btn-lg px-4">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                    </a>
+                </div>
+                {% else %}
+                <div class="d-flex gap-3 justify-content-center">
+                    <a href="{% url 'blog:topics' %}" class="btn btn-primary btn-lg px-4">
+                        <i class="bi bi-folder me-2"></i>Browse Topics
+                    </a>
+                    <a href="{% url 'blog:new_topic' %}" class="btn btn-outline-primary btn-lg px-4">
+                        <i class="bi bi-plus-circle me-2"></i>Create Topic
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
